@@ -3,8 +3,8 @@ import joblib
 import numpy as np
 import pandas as pd
 
-rf_model = joblib.load(r"D:\AI\Credit Card Fraud Detection\rf_model.joblib")
-xgb_model = joblib.load(r"D:\AI\Credit Card Fraud Detection\xgb_model.joblib")
+rf_model = joblib.load("rf_model.joblib")
+xgb_model = joblib.load("xgb_model.joblib")
 st.set_page_config(page_title="Fraud Detection System", layout="wide")
 st.title("Credit Card Fraud Detector")
 RF_WEIGHT = 0.4
