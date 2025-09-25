@@ -38,7 +38,7 @@ st.sidebar.header("⚙️ Options")
 mode = st.sidebar.radio("Choose input mode:", ["Single Transaction", "Batch CSV Upload"])
 if mode == "Single Transaction":
     st.subheader("Enter Transaction Features")
-    feature_input = st.text_area("Enter comma-separated features", "")
+    feature_input = st.text_area("Enter 30 comma-separated features in correct order (Time, V1-V28, Amount)", "")
     if st.button("Predict"):
         if feature_input:
             features = list(map(float, feature_input.split(",")))
