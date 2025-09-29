@@ -5,8 +5,9 @@ import pandas as pd
 
 rf_model = joblib.load("rf_model.joblib")
 xgb_model = joblib.load("xgb_model.joblib")
-st.set_page_config(page_title="Fraud Detection System", layout="wide")
+st.set_page_config(page_title="Fraud Detection System", page_icon="💳", layout="wide")
 st.title("Credit Card Fraud Detector")
+st.markdown("Predict whether a transaction is **fraudulent** or **legitimate** in real-time")
 RF_WEIGHT = 0.4
 XGB_WEIGHT = 0.6
 
@@ -38,7 +39,16 @@ st.sidebar.header("⚙️ Options")
 mode = st.sidebar.radio("Choose input mode:", ["Single Transaction", "Batch CSV Upload"])
 if mode == "Single Transaction":
     st.subheader("Enter Transaction Features")
-    feature_input = st.text_area("Enter 30 comma-separated features in correct order (Time, V1-V28, Amount)", "")
+    time_val = st.number_input("Transaction Time (seconds)", min_value=0, value=1000, step=1)
+    amount_val = st.number_input("Transaction Amount", min_value=0.0, value=1000.0, step=1.0)
+    st.markdown("### PCA Features (V1–V28)")
+    v_features = []
+    cols = st.columns(4)
+    for i in range(1, 29):
+        with cols[(i - 1) % 4]:  # distribute across 4 columns
+            v = st.number_input(f"V{i}", value=0.0, format="%.4f")
+            v_features.append(v)
+    features = [time_val] + v_features + [amount_val]
     if st.button("Predict"):
         if feature_input:
             features = list(map(float, feature_input.split(",")))
